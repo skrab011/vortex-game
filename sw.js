@@ -5,7 +5,7 @@
 // so players get the new version instead of the stale cached one.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CACHE_NAME = 'vortex-v1';
+const CACHE_NAME = 'vortex-v2';
 
 // Every file in the repo that the game needs
 const ASSETS = [
@@ -31,9 +31,8 @@ self.addEventListener('activate', event => {
       Promise.all(
         keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
       )
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 // ── Fetch: serve from cache, fall back to network ────────────────────────────
